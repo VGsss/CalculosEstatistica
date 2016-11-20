@@ -10,7 +10,7 @@ public class Calculos {
 	@SuppressWarnings("serial")
 	public static void main(String[] args) {
 
-		distribuicaoFreq(new ArrayList<Double>(4) {
+		System.out.println(distribuicaoFreq(new ArrayList<Double>(4) {
 			{
 				add(324.0);
 				add(324.0);
@@ -39,13 +39,21 @@ public class Calculos {
 				add(330.0);
 				add(330.0);
 			}
-		}).forEach((k,v) -> System.out.println("key: "+k+" value:"+v));;
+		}).size());//.forEach((k,v) -> System.out.println("key: "+k+" value:"+v));;
 
+		
+		
+		
 	}
 
 	public int numeroClasses(int numerodeelementos) {
 		return (int) (1 + 3.3 * (Math.log(numerodeelementos)));
 	}
+	
+	public int amplitudeClasses(double max,double min, int numLinhas){
+		return (int) (numLinhas != 0 ? (max - min)/numLinhas: 0) ;   //se numLinhas for 0 retornar 0
+	}
+	
 
 	public static double media(double[] elementos) {
 		double soma = 0;
@@ -117,6 +125,11 @@ public class Calculos {
 			}
 		}
 
+		if (saida.size > 8){
+			
+		}
+		
+		
 		// Preenche Fi
 
 		Iterator<ArrayList<Double>> it = saida.values().iterator();
