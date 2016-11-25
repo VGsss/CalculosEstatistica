@@ -81,101 +81,47 @@ public class CalculosTest {
 		System.out.println("\nTeste distribuição de Poisson com valores X = 3, Lambda = 1, t = 4 : "
 				+ Calculos.distribuicaoPoisson(3, 1, 4));
 
-		System.out.println("\nTeste para Correlação Linear Tabela: ");
-		Calculos.correlaçãoLinearTabela(new ArrayList<Double>() {
+		
+		ArrayList<Double> listaAtesteCL = new ArrayList<Double>() {
 			{
-				add(5.0);
-				add(8.0);
-				add(7.0);
-				add(10.0);
-				add(6.0);
-				add(7.0);
-				add(9.0);
+				add(1.0);
+				add(2.0);
 				add(3.0);
-				add(8.0);
-				add(2.0);
-			}
-		}, new ArrayList<Double>() {
-			{
-				add(6.0);
-				add(9.0);
-				add(8.0);
-				add(10.0);
-				add(5.0);
-				add(7.0);
-				add(8.0);
 				add(4.0);
-				add(6.0);
-				add(2.0);
+				add(5.0);
 			}
-		}).forEach((k, v) -> System.out.println("key: " + k + " value:" + v));
+		};
+		
+		
+		ArrayList<Double> listaBtesteCL = new ArrayList<Double>() {
+			{
+				add(1.0);
+				add(2.0);
+				add(4.0);
+				add(5.0);
+				add(8.0);
+			}
+		};
 
-		System.out.println("\nTeste para Correlação Linear: ");
-		System.out.println(Calculos.correlacaoLinear(Calculos.correlaçãoLinearTabela(new ArrayList<Double>() {
-			{
-				add(5.0);
-				add(8.0);
-				add(7.0);
-				add(10.0);
-				add(6.0);
-				add(7.0);
-				add(9.0);
-				add(3.0);
-				add(8.0);
-				add(2.0);
-			}
-		}, new ArrayList<Double>() {
-			{
-				add(6.0);
-				add(9.0);
-				add(8.0);
-				add(10.0);
-				add(5.0);
-				add(7.0);
-				add(8.0);
-				add(4.0);
-				add(6.0);
-				add(2.0);
-			}
-		})));
+		System.out.println("\nTeste para Correlação Linear Tabela: ");
+		Calculos.correlaçãoLinearTabela(listaAtesteCL ,listaBtesteCL ).forEach((k, v) -> System.out.println("key: " + k + " value:" + v));
+
+		System.out.println("\nTeste para Correlação Linear: ");		
+		System.out.println(Calculos.correlacaoLinear(Calculos.correlaçãoLinearTabela(listaAtesteCL,listaBtesteCL)));
 		
 		System.out.println("\nTeste para Regressão Linear: ");
-		System.out.println(Calculos.regressaoLinear(Calculos.correlaçãoLinearTabela(new ArrayList<Double>() {
-			{
-				add(1.0);
-				add(2.0);
-				add(3.0);
-				add(4.0);
-				add(5.0);
-			}
-		}, new ArrayList<Double>() {
-			{
-				add(1.0);
-				add(2.0);
-				add(4.0);
-				add(5.0);
-				add(8.0);
-			}
-		})));
+		System.out.println("Valor de A : " + Calculos.regressaoLinear(Calculos.correlaçãoLinearTabela(listaAtesteCL,listaBtesteCL))[0]);
+		System.out.println("Valor de B : " + Calculos.regressaoLinear(Calculos.correlaçãoLinearTabela(listaAtesteCL,listaBtesteCL))[1]);
 		
 		System.out.println("\nTeste para Desvio Padrão Estimado: ");
-		System.out.println(Calculos.desvioPadraoEstimado(Calculos.correlaçãoLinearTabela(new ArrayList<Double>() {
-			{
-				add(1.0);
-				add(2.0);
-				add(3.0);
-				add(4.0);
-				add(5.0);
-			}
-		}, new ArrayList<Double>() {
-			{
-				add(1.0);
-				add(2.0);
-				add(4.0);
-				add(5.0);
-				add(8.0);
-			}
-		})));
+		System.out.println(Calculos.desvioPadraoEstimado(Calculos.correlaçãoLinearTabela(listaAtesteCL,listaBtesteCL)));
+		
+		System.out.println("\nTeste para Estatística Teste Padronizada: ");
+		System.out.println(Calculos.estatisticaTestePadronizada(30, 28.5, 3.5, 36));
+		
+		System.out.println(
+				"\nTeste da Tabela de Distribuicao para o numero : " + Calculos.tabelaDistribuicaoNormal(Calculos.estatisticaTestePadronizada(30, 28.5, 3.5, 36)));
+		
 		
 		
 	}

@@ -1,5 +1,13 @@
 package calculos;
 
+//Feito por Rafael Bernardes Rodrigues - vg_rafael2@hotmail.com
+//Se isso um dia gerar dinheiro para alguém, quero metade.
+//Usar a vontade caso ajude outras pessoas.
+
+//Made by Rafael Bernardes Rodrigues - vg_rafael@hotmail.com
+//If anyone earns any money with this code, I wanna half.
+//You can use freely if you help others with this code.
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,9 +19,7 @@ import test.CalculosTest;
 public class Calculos {
 
 	public static void main(String[] args) {
-
 		CalculosTest.testarTudo();
-
 	}
 
 	public int numeroClasses(int numerodeelementos) {
@@ -314,13 +320,15 @@ public class Calculos {
 		return Math.pow(Math.E, -mediaOcorrenciasintervalo) * Math.pow(mediaOcorrenciasintervalo, nOcorrencias)
 				/ fatorial(nOcorrencias);
 	}
-	
+
 	@SuppressWarnings("serial")
-	public static LinkedHashMap<Double, ArrayList<Double>> correlaçãoLinearTabela(ArrayList<Double> elementosA,ArrayList<Double> elementosB) {
+	public static LinkedHashMap<Double, ArrayList<Double>> correlaçãoLinearTabela(ArrayList<Double> elementosA,
+			ArrayList<Double> elementosB) {
 		LinkedHashMap<Double, ArrayList<Double>> saida = new LinkedHashMap<Double, ArrayList<Double>>();
-		
-		if (elementosA.size() != elementosB.size()) return null;
-		
+
+		if (elementosA.size() != elementosB.size())
+			return null;
+
 		// Dicionario
 		// index = Numero Identificador (gerado automaticamente)
 		// valor[0] = valores a serem comparados (elementosA) Valores X
@@ -328,17 +336,19 @@ public class Calculos {
 		// valor[2] = valor de X * Y
 		// valor[3] = valor de X²
 		// valor[4] = valor de Y²
+		
 		// ultimo index vai ser sempre o somatorio de todos seguindo essa ordem:
 		// valor[0] = somatorio de X
 		// valor[1] = somatorio de Y
 		// valor[2] = somatorio de X * Y
 		// valor[3] = somatorio de X²
 		// valor[4] = somatorio de Y²
-		
-		//popular index e Valores X
-		
-		int i = 0;    //ta aqui fora por frescura do java (mentira, é por que é o que deu certo)
-		for(double elemento : elementosA){
+
+		// popular index e Valores X
+
+		int i = 0; // ta aqui fora por frescura do java (mentira, é por que é o
+					// que deu certo)
+		for (double elemento : elementosA) {
 			saida.put((double) i, new ArrayList<Double>(5) {
 				{
 					add(elemento);
@@ -350,9 +360,9 @@ public class Calculos {
 			});
 			i++;
 		}
-		
-		//popular Valores Y
-		
+
+		// popular Valores Y
+
 		Iterator<ArrayList<Double>> it = saida.values().iterator();
 
 		i = 0;
@@ -361,25 +371,25 @@ public class Calculos {
 			atual.set(1, elementosB.get(i));
 			i++;
 		}
-		
-		//calcula valores de X * Y, X² e Y²
-		
+
+		// calcula valores de X * Y, X² e Y²
+
 		it = saida.values().iterator();
 		while (it.hasNext()) {
 			ArrayList<Double> atual = it.next();
-			atual.set(2, atual.get(0) * atual.get(1) );
+			atual.set(2, atual.get(0) * atual.get(1));
 			atual.set(3, Math.pow(atual.get(0), 2));
-			atual.set(4, Math.pow(atual.get(1), 2) );
+			atual.set(4, Math.pow(atual.get(1), 2));
 		}
-		
-		//calcula os somatorios
-		
+
+		// calcula os somatorios
+
 		double somaX = 0.0;
 		double somaY = 0.0;
 		double somaXY = 0.0;
 		double somaXquadrado = 0.0;
 		double somaYquadrado = 0.0;
-		
+
 		it = saida.values().iterator();
 		while (it.hasNext()) {
 			ArrayList<Double> atual = it.next();
@@ -389,17 +399,17 @@ public class Calculos {
 			somaXquadrado += atual.get(3);
 			somaYquadrado += atual.get(4);
 		}
-		
-		//Gambiarra pra resolver a treta: 
-		// Local variable X defined in an enclosing scope must be final or effectively final
-		
+
+		// Gambiarra pra resolver a treta:
+		// Local variable X defined in an enclosing scope must be final or
+		// effectively final
+
 		final Double somaXfinal = new Double(somaX);
 		final Double somaYfinal = new Double(somaY);
 		final Double somaXYfinal = new Double(somaXY);
 		final Double somaXquadradofinal = new Double(somaXquadrado);
 		final Double somaYquadradofinal = new Double(somaYquadrado);
-		
-		
+
 		saida.put((double) saida.size(), new ArrayList<Double>(5) {
 			{
 				add(somaXfinal);
@@ -409,74 +419,89 @@ public class Calculos {
 				add(somaYquadradofinal);
 			}
 		});
-		
+
 		return saida;
 	}
-	
-	public static double correlacaoLinear(LinkedHashMap<Double, ArrayList<Double>> tabela){
+
+	public static double correlacaoLinear(LinkedHashMap<Double, ArrayList<Double>> tabela) {
 		int n = tabela.size() - 1;
-		
+
 		ArrayList<Double> ultimo = new ArrayList<Double>();
-		
+
 		Iterator<ArrayList<Double>> it = tabela.values().iterator();
-		while (it.hasNext()) { 
-			ultimo = it.next();
-		}
+		while (it.hasNext()) ultimo = it.next();
 		
 		double somaX = ultimo.get(0);
 		double somaY = ultimo.get(1);
 		double somaXY = ultimo.get(2);
 		double somaXquadrado = ultimo.get(3);
 		double somaYquadrado = ultimo.get(4);
-		
-		return (n * somaXY - somaX * somaY) / Math.sqrt(((n * somaXquadrado) - Math.pow(somaX, 2)) * ((n * somaYquadrado) - Math.pow(somaY, 2)));
-		
+
+		return (n * somaXY - somaX * somaY)
+				/ Math.sqrt(((n * somaXquadrado) - Math.pow(somaX, 2)) * ((n * somaYquadrado) - Math.pow(somaY, 2)));
 	}
-	
-	public static String regressaoLinear(LinkedHashMap<Double, ArrayList<Double>> tabela){
+
+	public static double correlacaoLinear(int n, double somaX, double somaY, double somaXY, double somaXquadrado,
+			double somaYquadrado) {
+		return (n * somaXY - somaX * somaY)
+				/ Math.sqrt(((n * somaXquadrado) - Math.pow(somaX, 2)) * ((n * somaYquadrado) - Math.pow(somaY, 2)));
+	}
+
+	public static double[] regressaoLinear(LinkedHashMap<Double, ArrayList<Double>> tabela) {
 		int n = tabela.size() - 1;
-		
+
 		ArrayList<Double> ultimo = new ArrayList<Double>();
-		
+
 		Iterator<ArrayList<Double>> it = tabela.values().iterator();
-		while (it.hasNext()) { 
-			ultimo = it.next();
-		}
-		
+		while (it.hasNext()) ultimo = it.next();
+
 		double somaX = ultimo.get(0);
 		double somaY = ultimo.get(1);
 		double somaXY = ultimo.get(2);
 		double somaXquadrado = ultimo.get(3);
-		
-		double a = (n * somaXY - somaX * somaY) / ((n * somaXquadrado) - Math.pow(somaX, 2));
-		
+
+		double a = ((n * somaXY) - (somaX * somaY)) / ((n * somaXquadrado) - Math.pow(somaX, 2));
+
 		double b = (somaY - (a * somaX)) / n;
-		
-		return "O Valor de a é " + a + " e o valor de b é " + b;
-		
+
+		return new double[] { a, b };
 	}
-	
-	public static double desvioPadraoEstimado(LinkedHashMap<Double, ArrayList<Double>> tabela){
+
+	public static double[] regressaoLinear(int n, double somaX, double somaY, double somaXY, double somaXquadrado) {
+
+		double a = ((n * somaXY) - (somaX * somaY)) / ((n * somaXquadrado) - Math.pow(somaX, 2));
+		double b = (somaY - (a * somaX)) / n;
+		return new double[] { a, b };
+	}
+
+	public static double desvioPadraoEstimado(LinkedHashMap<Double, ArrayList<Double>> tabela) {
 		int n = tabela.size() - 1;
-		
+
 		ArrayList<Double> ultimo = new ArrayList<Double>();
-		
+
 		Iterator<ArrayList<Double>> it = tabela.values().iterator();
-		while (it.hasNext()) { 
-			ultimo = it.next();
-		}
+		while (it.hasNext()) ultimo = it.next();
 		
 		double somaX = ultimo.get(0);
 		double somaY = ultimo.get(1);
 		double somaXY = ultimo.get(2);
 		double somaXquadrado = ultimo.get(3);
 		double somaYquadrado = ultimo.get(4);
-		
 		double a = (n * somaXY - somaX * somaY) / ((n * somaXquadrado) - Math.pow(somaX, 2));
 		double b = (somaY - (a * somaX)) / n;
+		return Math.sqrt(((somaYquadrado - (b * somaY)) - ((a * somaXY))) / (n - 2));
+	}
+
+	public static double desvioPadraoEstimado(int n, double somaX, double somaY, double somaXY, double somaXquadrado,
+			double somaYquadrado) {
+		double[] rl = regressaoLinear(n, somaX, somaY, somaXY, somaXquadrado);
+
+		return Math.sqrt(((somaYquadrado - (rl[1] * somaY)) - ((rl[0] * somaXY))) / (n - 2));
+	}
+	
+	public static double estatisticaTestePadronizada(double mediaHipo, double mediaAmostral, double desvioPadraoAmostra, double vezesTestado){
 		
-		return Math.sqrt(((somaYquadrado - (b * somaY)) - ((a * somaXY))) / (n-2));
-		
+		return ((mediaAmostral - mediaHipo)/ (desvioPadraoAmostra / (Math.sqrt(vezesTestado))));
 	}
 	
 	
